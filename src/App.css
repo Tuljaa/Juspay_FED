@@ -1,0 +1,20 @@
+.divAnimate {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #123456;
+  color: #fff;
+  transition: all 0.4s ease-out;
+  }
+  .fade {
+      animation: 4s linear 0s infinite alternate left_right;
+  }
+  @keyframes left_right {
+    from {
+      margin-left: 0px;
+      background: orange;
+    }
+    to {
+      margin-left: calc(100% - 60px);
+      background: red;
+    }
+  }

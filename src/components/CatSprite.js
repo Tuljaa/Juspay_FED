@@ -1,11 +1,64 @@
 import React from "react";
+import { useSelector } from 'react-redux'
+import Draggable from 'react-draggable';
+import '../App.css'
 
-export default function CatSprite() {
+export default function CatSprite(props) {
+  
+const count = useSelector(state => state.counter)
+const [display, setdisplay] = React.useState(true)
+
+let styles
+    switch (count.value) {
+      case 'GoTo':{
+        const GoTo = { 
+          transform: `translate(${count.x}px, ${count.y}px)`
+      }; 
+      styles=GoTo
+    } break;
+      case 'rotate':{
+        const rotate = { 
+          transform:`translateX(${count.x}px) translateY(${count.y}px) rotate(${count.degree}deg)`
+      }; 
+      styles=rotate
+    } break;
+    case 'move':{
+      console.log("In mOVE CASE",count.x,count.y)
+      const move = { 
+        transform:`translate(${count.x}px, ${count.y}px)`
+    }; 
+    styles=move
+    }break;
+      default:
+        break;
+    }
+      
+    console.log("style",count)
+ if(count.time!==0){
+  setTimeout(()=>{
+    setdisplay(false)
+ },count.time)
+ }
+  
+  
+  // console.log(display)
+   
   return (
-    <svg
+ <Draggable bounds={{ top: 0, left: 0, right: 500, bottom: 700 }} > 
+   <div>
+        {
+        (count.value=="say2Sec" && (display))?
+        <div>
+          {count.strs}
+        </div>
+        :null
+       }
+    <svg  
+        style={styles} 
+        visibility={count.visibility}
       xmlns="http://www.w3.org/2000/svg"
-      width="95.17898101806641"
-      height="100.04156036376953"
+      width={count.size}
+      height={count.size}
       viewBox="0.3210171699523926 0.3000000357627869 95.17898101806641 100.04156036376953"
       version="1.1"
       xmlSpace="preserve"
@@ -19,7 +72,7 @@ export default function CatSprite() {
                   d="M 21.9 73.8 C 19.5 73.3 16.6 72.5 14.2 70.3 C 8.7 65.4 7 57.3 3.2 59.4 C -0.7 61.5 -0.6 74.6 11.6 78.6 C 15.8 80 19.6 80 22.7 79.9 C 23.5 79.9 30.4 79.2 32.8 75.8 C 35.2 72.4 33.5 71.5 32.7 71.1 C 31.8 70.6 25.3 74.4 21.9 73.8 Z "
                   stroke="#001026"
                   strokeWidth="1.2"
-                  fill="#FFAB19"
+                  fill={count.color}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -30,12 +83,13 @@ export default function CatSprite() {
                   strokeWidth="1"
                 />
               </g>
+        
               <path
                 d="M37.7,81.5 C35.9,82.7 29.7,87.1 21.8,89.6 L21.4,89.7 C21,89.8 20.8,90.3 21,90.7 C22.7,93.1 25.8,97.9 20.3,99.6 C15,101.3 5.1,87.2 9.3,83.5 C11.2,82.1 12.9,82.8 13.8,83.2 C14.3,83.4 14.8,83.4 15.3,83.3 C16.5,82.9 18.7,82.1 20.4,81.2 C24.7,79 25.7,78.1 27.7,76.6 C29.7,75.1 34.3,71.4 38,74.6 C41.2,77.3 39.4,80.3 37.7,81.5 Z"
                 id="leg"
                 stroke="#001026"
                 strokeWidth="1.2"
-                fill="#FFAB19"
+                fill={count.color}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -44,7 +98,7 @@ export default function CatSprite() {
                 id="arm"
                 stroke="#001026"
                 strokeWidth="1.2"
-                fill="#FFAB19"
+                fill={count.color}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -54,7 +108,7 @@ export default function CatSprite() {
                   id="body"
                   stroke="#001026"
                   strokeWidth="1.2"
-                  fill="#FFAB19"
+                  fill={count.color}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -70,7 +124,7 @@ export default function CatSprite() {
                 id="arm"
                 stroke="#001026"
                 strokeWidth="1.2"
-                fill="#FFAB19"
+                fill={count.color}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -79,7 +133,7 @@ export default function CatSprite() {
                   d="M 53.1 9 C 50.8 8.6 48.4 8.4 45.6 8.6 C 40.9 8.8 36.4 10.5 36.4 10.5 L 24.3 2.6 C 23.9 2.4 23.4 2.7 23.5 3.1 L 25.6 21 C 26.2 20.2 15 33.8 22.1 45.2 C 29.2 56.6 44.3 61.7 63.1 58 C 81.9 54.3 86.3 43.5 85.1 37.8 C 83.9 32.1 76.8 30 76.8 30 C 76.8 30 76.7 25.5 73.5 20 C 71.6 16.7 65.2 12 65.2 12 L 62.6 1.3 C 62.5 0.9 62 0.8 61.7 1 L 53.1 9 Z "
                   stroke="#001026"
                   strokeWidth="1.2"
-                  fill="#FFAB19"
+                  fill={count.color}
                 />
                 <path
                   d="M 76.5 30.4 C 76.5 30.4 83.4 32.2 84.6 37.9 C 85.8 43.6 81 53.9 62.4 57.5 C 38.2 62.5 26.7 48.1 33.4 37.5 C 40.1 26.8 51.6 35.9 60 35.3 C 67.2 34.8 68 28.5 76.5 30.4 Z "
@@ -179,6 +233,10 @@ export default function CatSprite() {
           </g>
         </g>
       </g>
+   
     </svg>
+    </div>
+    </Draggable>
+  
   );
 }
