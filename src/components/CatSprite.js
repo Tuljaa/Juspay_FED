@@ -52,6 +52,12 @@ let styles
           {count.strs}
         </div>
         :null
+       }{
+        (count.value=="say2Sec")?
+        <div>
+          {count.strs}
+        </div>
+        :null
        }
     <svg  
         style={styles} 
